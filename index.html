@@ -7,32 +7,98 @@
         <link rel="icon" type="image/png" href="img/logo.ico"/>
         
         <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css" />
-        <link rel="stylesheet" href="lib/bootstrap/css/bootstrap-theme.min.css" />
+        <link rel="stylesheet" href="lib/bootstrap/css/bootstrap-darkly.min.css" />
         <script type="text/javascript" src="lib/jquery/jquery-1.11.2.min.js"></script>
         <script type="text/javascript" src="lib/bootstrap/js/bootstrap.min.js"></script>
         
         <script type="text/javascript" src="lib/angular/angular-1.3.15.min.js"></script>
         
-        <link href='http://fonts.googleapis.com/css?family=Lobster+Two' rel='stylesheet' type='text/css'>
+        <link href='http://fonts.googleapis.com/css?family=Source+Code+Pro' rel='stylesheet' type='text/css'>
         <style type="text/css">
-            h1, h2, h3 {
-                font-family: 'Lobster Two', cursive;
+			@font-face {
+				font-family: 'arial_atbash';
+				src: url('fonts/arial/arial_atbash-webfont.eot');
+				src: url('fonts/arial/arial_atbash-webfont.eot?#iefix') format('embedded-opentype'),
+					 url('fonts/arial/arial_atbash-webfont.woff2') format('woff2'),
+					 url('fonts/arial/arial_atbash-webfont.woff') format('woff'),
+					 url('fonts/arial/arial_atbash-webfont.ttf') format('truetype'),
+					 url('fonts/arial/arial_atbash-webfont.svg#arialregular') format('svg');
+				font-weight: normal;
+				font-style: normal;
+			}
+			
+            h1, h2, h3, h2 a, h2 a:hover {
+                font-family: 'Source Code Pro';
+				color: #88f;
             }
             h1 {
                 margin-top: 0;
             }
-            pre {
-                padding: 0;
-                margin: 5px;
-            }
             div.content {
                 padding: 5px;
             }
-            div.demos {
-                padding: 5px;
-                text-align: center;
-            }
+			p, li {
+				font-size: 16px;
+				font-family: Verdana;
+			}
+			blockquote {
+				font-size: 15px;
+				padding: 5px 10px
+			}
+			div.demo {
+				position: relative;
+				bottom: 8px;
+			}
+			div.demo.bot,
+			div.demo.human {
+				margin-left: 10px;
+				color: #ffa;
+				font-size: 16px;
+			}
+			div.demo.bot {
+				font-family: Arial;
+			}
+			div.demo.human {
+				font-family: arial_atbash;
+			}
+			h2 a, h2 a:hover {
+				text-decoration: none;
+			}
+			td a {
+				color: darkred;
+				font-size: 1.2em;
+			}
+			td a:hover {
+				color: red;
+			}
         </style>
+		<script type="text/javascript">
+			function encrypt(text) {
+				var list = "abcdefghijklmnopqrstuvwxyz";
+				list = list + list.toUpperCase()
+				var code = "zyxwvutsrqponmlkjihgfedcba";
+				code = code + code.toUpperCase()
+				
+				var newText = '';
+				for(var i=0; i<text.length; i++) {
+					var c = text.charAt(i);
+					var index = code.indexOf(c)
+					if(index >= 0) {
+						newText += list.charAt(index);
+					} else {
+						newText += c;
+					}
+				}
+				return newText;
+			}
+		
+			var app = angular.module('myApp', []);
+			app.controller('demoCtrl', function($scope) {
+				$scope.someText = "Some sensitive text that only humans must be able to read";
+				$scope.update = function() { $scope.encrypText = encrypt($scope.someText); };
+				$scope.update();
+			});
+		</script>
     </head>
     <body>
         <nav class="navbar navbar-default">
@@ -43,16 +109,161 @@
                 </div>
 
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><a href="docs/toggle-switch.html">Toggle switch</a></li>
-                        <li><a href="docs/progress-pie-chart.html">Progress pie chart</a></li>
-                        <li><a href="docs/checkbox.html">Checkbox</a></li>
+                    <ul class="nav navbar-nav navbar-left">
+                        <li><a href="index.html">Getting started</a></li>
+                        <li><a href="advanced.html">Advanced topics</a></li>
+                        <li><a href="encoder.html">Encoder</a></li>
                     </ul>
                 </div>
             </div>
         </nav>
         <div class="content col-md-8 col-md-offset-2">
-		
+            <h1>Introduction</h1>
+
+			<p><strong>TuringFonts</strong> is a simple technique for generate content (for websites or PDF files) that can't we crawled by bots or copied using the clipboard.
+
+			<p>It's useful in situations in which you want to publish some sensitive content that you don't want to be indexed by search engines like Google or Bing (such as e-mail addresses, telephone numbers or personal names) or when you don't want to allow the user to copy and paste your text (to avoid plagiarism or unauthorized modifications).</p>
+
+            <h2>How it works?</h2>
+
+			<p>This technique is based on the <a href="http://en.wikipedia.org/wiki/Substitution_cipher#Simple_substitution" target="_blank">simple substitution cipher</a> method and in the use of custom fonts.</p>
+
+			<blockquote>The simple substitutions cipher in a method of encoding in which each letter is replaced by another one. For example, you could decide to replace each letter by his neighbour in the alphabet (write 'b' instead of 'a', 'c' instead of 'b', etc.), in that case the text "Hello" would be write as "Ifmmp".</blockquote>
+
+			<blockquote>A font (in computing) is basically a file that indicates how to draw each letter. So, for example, some fonts define that the letter 'O' must be draw rounded while others indicate that must be oval.</blockquote>
+
+			<p>So basically you encrypt your text using some substitution cipher and then you apply (to that text) a Turing font that inverses the substitution previously made.</p>
+
+			<blockquote>A Turing font is a font whose symbols has been unordered on purpose. So when a letter is found, another letter is draw in his place. For example, a Turing font may indicate to draw an 'a' when encountering a 'b', draw a 'b' when encountering a 'c', etc.).</blockquote>
+
+			<p>In that's way any bot or computer, that get access to your website or PDF file, is going to read the encrypted text while all humans visitors are going to read the original text.</p>
+            
+			<div ng-app="myApp" ng-controller="demoCtrl">
+				<h2><a name="demo">Demostration</a></h2>
+
+				<p>Write some text here:</p>
+				<div class="demo"><input type="text" ng-model="someText" ng-change="update()" style="width:100%;"></div>
+				<br/>
+				<p>This is what all computers and bots are going to read:</p>
+				<div class="demo bot">{{encrypText}}</div>
+				<br/>
+				<p>This is what all humans are going to see*:</p>
+				<div class="demo human">{{encrypText}}</div>
+				<p><em>(*) Try selecting and copying this text into a notepad to see what happens</em></p>
+			</div>
+			
+            <h2>How to use it</h2>
+            
+			<p>In order to use this technique, you must follow a two step process:</p>
+
+			<ol>
+				<li>Encode you text using some substitution method. You can use <a href="encoder.html" title="TuringFonts encoder">this encoder</a> to do it.</li>
+				<li>Apply, to the previous text, a Turing font. In the <a href="#downloads">download section</a> you can find a list of fonts ready to be used.</li>
+			</ol>
+
+			<p>If you want to use your own substitution alphabets and/or generate your own Turing fonts, I recommend you to <a href="advanced.html">read the advanced topics</a>.</p>
+			           
+			<h2><a name="downloads">Downloads</a></h2>
+			
+			<p>In this section you will find a list of <em>Turing fonts</em> ready to be used.</p>
+			
+			<p>Each row of the table contains a font type, and each column indicates the substitution alphabet used for generate the font. For each combination, you can download a TTF file or a ZIP file (containing the font in all the required formats to be used at the web).</p>
+			
+			<table class="table">
+				<thead>
+					<tr>
+						<th></th>
+						<th>ROT13</th>
+						<th>Atbash</th>
+						<th>Zebra</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>Arial</td>
+						<td>
+								<a href="fonts/Arial_ROT13.ttf"><span class="glyphicon glyphicon-font" aria-hidden="true"></span></a>
+								<a href="fonts/Arial_ROT13.zip"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span></a>
+						</td>
+						<td>
+							<a href="fonts/Arial_Atbash.ttf"><span class="glyphicon glyphicon-font" aria-hidden="true"></span></a>
+							<a href="fonts/Arial_Atbash.zip"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span></a>
+						</td>
+						<td>
+								<a href="fonts/Arial_Zebra.ttf"><span class="glyphicon glyphicon-font" aria-hidden="true"></span></a>
+								<a href="fonts/Arial_Zebra.zip"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span></a>
+						</td>
+					</tr>
+					<tr>
+						<td>Courier New</td>
+						<td>
+								<a href="fonts/Courier_New_ROT13.ttf"><span class="glyphicon glyphicon-font" aria-hidden="true"></span></a>
+								<a href="fonts/Courier_New_ROT13.zip"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span></a>
+						</td>
+						<td>
+								<a href="fonts/Courier_New_Atbash.ttf"><span class="glyphicon glyphicon-font" aria-hidden="true"></span></a>
+								<a href="fonts/Courier_New_Atbash.zip"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span></a>
+						</td>
+						<td>
+								<a href="fonts/Courier_New_Zebra.ttf"><span class="glyphicon glyphicon-font" aria-hidden="true"></span></a>
+								<a href="fonts/Courier_New_Zebra.zip"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span></a>
+						</td>
+					</tr>
+					<tr>
+						<td>Tahoma</td>
+						<td>
+								<a href="fonts/Tahoma_ROT13.ttf"><span class="glyphicon glyphicon-font" aria-hidden="true"></span></a>
+								<a href="fonts/Tahoma_ROT13.zip"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span></a>
+						</td>
+						<td>
+								<a href="fonts/Tahoma_Atbash.ttf"><span class="glyphicon glyphicon-font" aria-hidden="true"></span></a>
+								<a href="fonts/Tahoma_Atbash.zip"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span></a>
+						</td>
+						<td>
+								<a href="fonts/Tahoma_Zebra.ttf"><span class="glyphicon glyphicon-font" aria-hidden="true"></span></a>
+								<a href="fonts/Tahoma_Zebra.zip"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span></a>
+						</td>
+					</tr>
+					<tr>
+						<td>Times New Roman</td>
+						<td>
+								<a href="fonts/Times_New_Roman_ROT13.ttf"><span class="glyphicon glyphicon-font" aria-hidden="true"></span></a>
+								<a href="fonts/Times_New_Roman_ROT13.zip"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span></a>
+						</td>
+						<td>
+								<a href="fonts/Times_New_Roman_Atbash.ttf"><span class="glyphicon glyphicon-font" aria-hidden="true"></span></a>
+								<a href="fonts/Times_New_Roman_Atbash.zip"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span></a>
+						</td>
+						<td>
+								<a href="fonts/Times_New_Roman_Zebra.ttf"><span class="glyphicon glyphicon-font" aria-hidden="true"></span></a>
+								<a href="fonts/Times_New_Roman_Zebra.zip"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span></a>
+						</td>
+					</tr>
+					<tr>
+						<td>Verdana</td>
+						<td>
+								<a href="fonts/Verdana_ROT13.ttf"><span class="glyphicon glyphicon-font" aria-hidden="true"></span></a>
+								<a href="fonts/Verdana_ROT13.zip"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span></a>
+						</td>
+						<td>
+								<a href="fonts/Verdana_Atbash.ttf"><span class="glyphicon glyphicon-font" aria-hidden="true"></span></a>
+								<a href="fonts/Verdana_Atbash.zip"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span></a>
+						</td>
+						<td>
+								<a href="fonts/Verdana_Zebra.ttf"><span class="glyphicon glyphicon-font" aria-hidden="true"></span></a>
+								<a href="fonts/Verdana_Zebra.zip"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span></a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			
+            <h2>License</h2>
+            
+			<img src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" style="float:left; padding:8px;" />
+
+			<p>All fonts, scripts and content of this work are licensed under a <a href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank" title="CC BY-SA 4.0">Creative Commons Attribution-ShareAlike 4.0 International License</a>.</p>
+
+		</div>
 
 hasta ahora yo diria que trabaje 5 horas
 
@@ -69,100 +280,8 @@ http://en.wikipedia.org/wiki/Substitution_cipher#Simple_substitution
 Plaintext alphabet: 	ABCDEFGHIJKLMNOPQRSTUVWXYZ
 Ciphertext alphabet: 	ZEBRASCDFGHIJKLMNOPQTUVWXY
 
-Arial
-Verdana
-Tahoma
-Times New Roman
-Courier New
 		
-            <h1>Introduction</h1>
-
-            <p><strong>SaVaGe</strong> is a library of web widgets implemented with SVG (using <a href="http://d3js.org">D3.js</a>).</p>
-
-            <p><em>Why SVG?</em> Because using vector graphics you can: easily change the size and colors of the widgets, and you don't need to include 
-            image or stylesheet files.</p>
-
-            <h2>How to use</h2>
-
-            In order to use it, you must only include the <em>D3.js</em> and <em>SaVaGe</em> scripts in your page.
-
-<pre><code class="html">&lt;html&gt;
-    &lt;head&gt;
-        &lt;script src="d3.v3.min.js" type="text/javascript"&gt;&lt;/script&gt;
-        &lt;script src="savage.min.js" type="text/javascript"&gt;&lt;/script&gt;
-    &lt;/head&gt;
-    &lt;body&gt;
-        &lt;script type="text/javascript"&gt;
-            // Add a toggle switch at the end of 'body'.
-            SaVaGe.ToggleSwitch();
-        &lt;/script&gt;
-    &lt;/body&gt;
-&lt;/html&gt;</code></pre>
-            
-            <h2>Widgets</h2>
-            
-            <p>The widgets implemented so far are the following:</p>
-
-            <div class="row demos">
-                <div class="col-md-3" style="line-height: 50px;"><a href="docs/toggle-switch.html"><strong>Toggle Switch</strong></a></div>
-                <div class="col-md-3"><div id="toggle1"></div></div>
-                <div class="col-md-3"><div id="toggle2"></div></div>
-                <div class="col-md-3"><div id="toggle3"></div></div>
-            </div>
-            <script type="text/javascript">
-                SaVaGe.ToggleSwitch({container: "#toggle1"});
-                SaVaGe.ToggleSwitch({container: "#toggle3", colors: {backLeft:'blue', foreLeft:'green', backRight:'red', foreRight:'yellow'}});
-                SaVaGe.ToggleSwitch({container: "#toggle2", radius: 20, height: 20, width: 100, colors: {foreLeft:'#aaa', foreRight:'#888'}});
-            </script>
-                
-            <br/>
-
-            <div class="row demos">
-                <div class="col-md-3" style="line-height: 50px;"><a href="docs/progress-pie-chart.html"><strong>Progress pie chart</strong></a></div>
-                <div class="col-md-3"><div id="pie1"></div></div>
-                <div class="col-md-3"><div id="pie2"></div></div>
-                <div class="col-md-3"><div id="pie3"></div></div>
-            </div>
-            <script type="text/javascript">
-                SaVaGe.ProgressPieChart({container: "#pie1"});
-                SaVaGe.ProgressPieChart({container: "#pie2", value: 0.8, label: {show: true, color: 'white', size:"16px"}});
-                SaVaGe.ProgressPieChart({container: "#pie3", radius: 30, innerRadius: 10, colors: {completed: "darkblue", pending: "lightblue"}});
-            </script>
-
-            <br/>
-
-            <div class="row demos">
-                <div class="col-md-3" style="line-height: 25px;"><a href="docs/checkbox.html"><strong>Checkbox</strong></a></div>
-                <div class="col-md-3"><div id="checkbox1"></div></div>
-                <div class="col-md-3"><div id="checkbox2"></div></div>
-                <div class="col-md-3"><div id="checkbox3"></div></div>
-            </div>
-            <script type="text/javascript">
-                var check1 = SaVaGe.CheckBox({container: "#checkbox1", colors:{back: '#eee', border:'darkgray', tick:'black'}});
-                check1.setValue(1);
-                var check2 = SaVaGe.CheckBox({container: "#checkbox2", size: 30, border:{radius: 15}, marks:{checked: "fill"}, colors:{back: '#eef', border:'darkblue', fill:'darkblue'}});
-                check2.setValue(1);
-                var check3 = SaVaGe.CheckBox({container: "#checkbox3", tristate: true, colors:{border:'gray', tick:'green', cross:'red'}});
-                check3.setValue(2);
-            </script>
-
-            <p>Upcoming releases may include progress bars, sliders, loaders, analog clocks and gauges, among others. <strong>Suggestions are accepted!</strong></p>
-            
-            <h2>License</h2>
-            
-            <p>This library is free software; you can redistribute it and/or
-            modify it under the terms of the GNU Lesser General Public
-            License as published by the Free Software Foundation; either
-            version 3 of the License, or (at your option) any later version.</p>
-
-            <p>This library is distributed in the hope that it will be useful,
-            but WITHOUT ANY WARRANTY; without even the implied warranty of
-            MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-            Lesser General Public License for more details.</p>
-
-            <p>You should have received a copy of the GNU Lesser General Public
-            License along with this library; If not, visit the <a href="http://www.gnu.org/licenses" target="_blank">GNU website</a>.</p>
-        </div>
+		<a href="https://github.com/jfmdev/TuringFonts" target="_blank"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/52760788cde945287fbb584134c4cbc2bc36f904/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f77686974655f6666666666662e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png"></a>
     </body>
 </html>
 
