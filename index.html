@@ -1,0 +1,168 @@
+<!DOCTYPE html> 
+<html lang="en">
+    <head>
+        <title>TuringFonts: Write uncrawable and uncopiable texts</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link rel="icon" type="image/png" href="img/logo.ico"/>
+        
+        <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="lib/bootstrap/css/bootstrap-theme.min.css" />
+        <script type="text/javascript" src="lib/jquery/jquery-1.11.2.min.js"></script>
+        <script type="text/javascript" src="lib/bootstrap/js/bootstrap.min.js"></script>
+        
+        <script type="text/javascript" src="lib/angular/angular-1.3.15.min.js"></script>
+        
+        <link href='http://fonts.googleapis.com/css?family=Lobster+Two' rel='stylesheet' type='text/css'>
+        <style type="text/css">
+            h1, h2, h3 {
+                font-family: 'Lobster Two', cursive;
+            }
+            h1 {
+                margin-top: 0;
+            }
+            pre {
+                padding: 0;
+                margin: 5px;
+            }
+            div.content {
+                padding: 5px;
+            }
+            div.demos {
+                padding: 5px;
+                text-align: center;
+            }
+        </style>
+    </head>
+    <body>
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#"><img alt="" title="TuringFonts" src="img/logo-24.png"></a>
+                    <a class="navbar-brand" href="#">TuringFonts</a>
+                </div>
+
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="docs/toggle-switch.html">Toggle switch</a></li>
+                        <li><a href="docs/progress-pie-chart.html">Progress pie chart</a></li>
+                        <li><a href="docs/checkbox.html">Checkbox</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div class="content col-md-8 col-md-offset-2">
+		
+
+hasta ahora yo diria que trabaje 5 horas
+
+http://en.wikipedia.org/wiki/Atbash
+
+http://en.wikipedia.org/wiki/ROT13
+
+http://en.wikipedia.org/wiki/Caesar_cipher
+	ROT4
+	
+http://en.wikipedia.org/wiki/Substitution_cipher#Simple_substitution
+	Zebra
+	
+Plaintext alphabet: 	ABCDEFGHIJKLMNOPQRSTUVWXYZ
+Ciphertext alphabet: 	ZEBRASCDFGHIJKLMNOPQTUVWXY
+
+Arial
+Verdana
+Tahoma
+Times New Roman
+Courier New
+		
+            <h1>Introduction</h1>
+
+            <p><strong>SaVaGe</strong> is a library of web widgets implemented with SVG (using <a href="http://d3js.org">D3.js</a>).</p>
+
+            <p><em>Why SVG?</em> Because using vector graphics you can: easily change the size and colors of the widgets, and you don't need to include 
+            image or stylesheet files.</p>
+
+            <h2>How to use</h2>
+
+            In order to use it, you must only include the <em>D3.js</em> and <em>SaVaGe</em> scripts in your page.
+
+<pre><code class="html">&lt;html&gt;
+    &lt;head&gt;
+        &lt;script src="d3.v3.min.js" type="text/javascript"&gt;&lt;/script&gt;
+        &lt;script src="savage.min.js" type="text/javascript"&gt;&lt;/script&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;script type="text/javascript"&gt;
+            // Add a toggle switch at the end of 'body'.
+            SaVaGe.ToggleSwitch();
+        &lt;/script&gt;
+    &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+            
+            <h2>Widgets</h2>
+            
+            <p>The widgets implemented so far are the following:</p>
+
+            <div class="row demos">
+                <div class="col-md-3" style="line-height: 50px;"><a href="docs/toggle-switch.html"><strong>Toggle Switch</strong></a></div>
+                <div class="col-md-3"><div id="toggle1"></div></div>
+                <div class="col-md-3"><div id="toggle2"></div></div>
+                <div class="col-md-3"><div id="toggle3"></div></div>
+            </div>
+            <script type="text/javascript">
+                SaVaGe.ToggleSwitch({container: "#toggle1"});
+                SaVaGe.ToggleSwitch({container: "#toggle3", colors: {backLeft:'blue', foreLeft:'green', backRight:'red', foreRight:'yellow'}});
+                SaVaGe.ToggleSwitch({container: "#toggle2", radius: 20, height: 20, width: 100, colors: {foreLeft:'#aaa', foreRight:'#888'}});
+            </script>
+                
+            <br/>
+
+            <div class="row demos">
+                <div class="col-md-3" style="line-height: 50px;"><a href="docs/progress-pie-chart.html"><strong>Progress pie chart</strong></a></div>
+                <div class="col-md-3"><div id="pie1"></div></div>
+                <div class="col-md-3"><div id="pie2"></div></div>
+                <div class="col-md-3"><div id="pie3"></div></div>
+            </div>
+            <script type="text/javascript">
+                SaVaGe.ProgressPieChart({container: "#pie1"});
+                SaVaGe.ProgressPieChart({container: "#pie2", value: 0.8, label: {show: true, color: 'white', size:"16px"}});
+                SaVaGe.ProgressPieChart({container: "#pie3", radius: 30, innerRadius: 10, colors: {completed: "darkblue", pending: "lightblue"}});
+            </script>
+
+            <br/>
+
+            <div class="row demos">
+                <div class="col-md-3" style="line-height: 25px;"><a href="docs/checkbox.html"><strong>Checkbox</strong></a></div>
+                <div class="col-md-3"><div id="checkbox1"></div></div>
+                <div class="col-md-3"><div id="checkbox2"></div></div>
+                <div class="col-md-3"><div id="checkbox3"></div></div>
+            </div>
+            <script type="text/javascript">
+                var check1 = SaVaGe.CheckBox({container: "#checkbox1", colors:{back: '#eee', border:'darkgray', tick:'black'}});
+                check1.setValue(1);
+                var check2 = SaVaGe.CheckBox({container: "#checkbox2", size: 30, border:{radius: 15}, marks:{checked: "fill"}, colors:{back: '#eef', border:'darkblue', fill:'darkblue'}});
+                check2.setValue(1);
+                var check3 = SaVaGe.CheckBox({container: "#checkbox3", tristate: true, colors:{border:'gray', tick:'green', cross:'red'}});
+                check3.setValue(2);
+            </script>
+
+            <p>Upcoming releases may include progress bars, sliders, loaders, analog clocks and gauges, among others. <strong>Suggestions are accepted!</strong></p>
+            
+            <h2>License</h2>
+            
+            <p>This library is free software; you can redistribute it and/or
+            modify it under the terms of the GNU Lesser General Public
+            License as published by the Free Software Foundation; either
+            version 3 of the License, or (at your option) any later version.</p>
+
+            <p>This library is distributed in the hope that it will be useful,
+            but WITHOUT ANY WARRANTY; without even the implied warranty of
+            MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+            Lesser General Public License for more details.</p>
+
+            <p>You should have received a copy of the GNU Lesser General Public
+            License along with this library; If not, visit the <a href="http://www.gnu.org/licenses" target="_blank">GNU website</a>.</p>
+        </div>
+    </body>
+</html>
+
