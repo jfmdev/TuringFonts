@@ -1,0 +1,292 @@
+<!DOCTYPE html> 
+<html lang="en">
+    <head>
+        <title>TuringFonts - Encoder and scripts</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link rel="icon" type="image/png" href="img/logo.ico"/>
+        
+        <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="lib/bootstrap/css/bootstrap-darkly.min.css" />
+        <script type="text/javascript" src="lib/jquery/jquery-1.11.2.min.js"></script>
+        <script type="text/javascript" src="lib/bootstrap/js/bootstrap.min.js"></script>
+        
+        <script type="text/javascript" src="lib/angular/angular-1.3.15.min.js"></script>
+
+        <link rel="stylesheet" href="lib/highlights/styles/tomorrow-night.css" />
+        <script type="text/javascript" src="lib/highlights/highlight.pack.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script>
+        
+        <link href='http://fonts.googleapis.com/css?family=Source+Code+Pro' rel='stylesheet' type='text/css'>
+        <style type="text/css">
+			@font-face {
+				font-family: 'arial_atbash';
+				src: url('fonts/arial/arial_atbash-webfont.eot');
+				src: url('fonts/arial/arial_atbash-webfont.eot?#iefix') format('embedded-opentype'),
+					 url('fonts/arial/arial_atbash-webfont.woff2') format('woff2'),
+					 url('fonts/arial/arial_atbash-webfont.woff') format('woff'),
+					 url('fonts/arial/arial_atbash-webfont.ttf') format('truetype'),
+					 url('fonts/arial/arial_atbash-webfont.svg#arialregular') format('svg');
+				font-weight: normal;
+				font-style: normal;
+			}
+			
+            h1, h2, h3, h2 a, h2 a:hover {
+                font-family: 'Source Code Pro';
+				color: #88f;
+            }
+            h1 {
+                margin-top: 0;
+            }
+            div.content {
+                padding: 5px;
+            }
+			p, li {
+				font-size: 16px;
+				font-family: Verdana;
+			}
+			h2 a, h2 a:hover {
+				text-decoration: none;
+			}
+			input, textarea, select {
+				color: white;
+				background-color: #333;
+				border: 1px solid darkgray;
+			}
+			span.alpha {
+				color: #ffa;
+			}
+			div.output {
+				border: 1px solid darkgray;
+				padding: 3px;
+				color: #aff;
+			}
+			pre {
+				padding: 0;
+			}
+        </style>
+		<script type="text/javascript">
+			function encrypt(plain, cipher, text) {
+				plain = plain + plain.toUpperCase()
+				cipher = cipher + cipher.toUpperCase()
+				
+				var newText = '';
+				for(var i=0; i<text.length; i++) {
+					var c = text.charAt(i);
+					var index = plain.indexOf(c)
+					if(index >= 0 && index < cipher.length) {
+						newText += cipher.charAt(index);
+					} else {
+						newText += c;
+					}
+				}
+				return newText;
+			}
+		
+			var app = angular.module('myApp', []);
+			app.controller('encoderCtrl', function($scope) {
+				$scope.plainAlpha = "abcdefghijklmnopqrstuvwxyz";
+				$scope.cipherAlpha = "zyxwvutsrqponmlkjihgfedcba";
+				
+				$scope.plainText = "Some sensitive text that only humans must be able to read";
+				$scope.update = function() { $scope.cipherText = encrypt($scope.plainAlpha, $scope.cipherAlpha, $scope.plainText); };
+				
+				$scope.method = 'ROT13';
+				$scope.options = ['Atbash', 'ROT13', 'Zebra', 'Custom'];
+				$scope.methodChanged = function() {
+					$scope.plainAlpha = "abcdefghijklmnopqrstuvwxyz";
+					if($scope.method === 'Atbash') {
+						$scope.cipherAlpha = "zyxwvutsrqponmlkjihgfedcba";
+					}
+					if($scope.method === 'ROT13') {
+						$scope.cipherAlpha = "nopqrstuvwxyzabcdefghijklm";
+					}
+					if($scope.method === 'Zebra') {
+						$scope.cipherAlpha = "zebrascdfghijklmnopqtuvwxy";
+					}
+					$scope.update();
+				};
+				$scope.methodChanged();
+			});
+		</script>
+    </head>
+    <body>
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#"><img alt="" title="TuringFonts" src="img/logo-24.png"></a>
+                    <a class="navbar-brand" href="#">TuringFonts</a>
+                </div>
+
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav navbar-left">
+                        <li><a href="index.html">Getting started</a></li>
+                        <li><a href="advanced.html">Advanced topics</a></li>
+                        <li><a href="encoder.html">Encoder</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div class="content col-md-8 col-md-offset-2">
+            <h1>Encoder</h1>
+
+			<p>Select the substitution method that you want to use and enter the text that you want to encode.</p>
+			<p>At the <a href="index.html#downloads">downloads</a> section you will find some fonts that can be used when the substitution method used is either ROT13, Atbash or Zebra.
+			If you define a custom substitution method, you will need to create your own font, as indicated in the <a href="advanced.html">advanced documentation</a>.
+			
+			<div ng-app="myApp" ng-controller="encoderCtrl">
+				<p><strong><big>Input</big></strong></p>
+				<p>
+					Substitution method:
+					<select ng-model="method" ng-options="item for item in options" ng-change="methodChanged()"></select>
+				</p>
+				<small>
+					<div class="row" style="margin-bottom: 3px;">
+						<div class="col-md-2 text-right">Plaintext alphabet:</div>
+						<div class="col-md-10 text-left">
+							<span class="alpha" ng-if="method !== 'Custom'">{{plainAlpha}}</span>
+							<input ng-if="method === 'Custom'" type="text" ng-model="plainAlpha" ng-change="update()" size="40" />
+						</div>
+					</div>
+				</small>
+				<small>
+					<div class="row" style="margin-bottom: 3px;">
+						<div class="col-md-2 text-right">Ciphertext alphabet:</div>
+						<div class="col-md-10 text-left">
+							<span class="alpha" ng-if="method !== 'Custom'">{{cipherAlpha}}</span>
+							<input ng-if="method === 'Custom'" type="text" ng-model="cipherAlpha" ng-change="update()" size="40" />
+						</div>
+					</div>
+				</small>
+				<br/>
+				<div>
+					<textarea ng-model="plainText" ng-change="update()" style="width:100%;"></textarea>
+				</div>
+				
+				<br/>
+				
+				<p><strong><big>Output</big></strong></p>
+				<div class="output">{{cipherText}}</div>
+			
+			</div>
+
+			<br/>
+			
+            <h2>Dynamic encoding</h2>
+
+			<p>If you want to encode your text at your server, or you need to encode content generated dynamically, you only have to implement an encoding function.</p>
+			<p>It's easy! Here you have examples in some of the most popular languages:</p>
+			<br/>
+			
+			<p><strong><big>PHP</big></strong></p>
+			
+<pre><code class="php">function encrypt($plain, $cipher, $text) {
+    $plain = $plain . strtoupper($plain);
+    $cipher = $cipher . strtoupper($cipher);
+ 
+    $newText = &#x27;&#x27;;
+    for($i=0; $i&#x3C;strlen($text); $i++)  {
+        $c = $text[$i];
+        $index = strrpos($plain, $c);
+        if($index &#x26;&#x26; $index &#x3C; strlen($cipher)) {
+            $newText = $newText . $cipher[$index];
+        } else {
+            $newText = $newText . $c;
+        }
+    }
+    return $newText;
+}</code></pre>
+
+			<p><a href="http://ideone.com/qtgkDz" target="_blank">See live demo</a></p>
+			<br/>
+    		
+			<p><strong><big>JavaScript</big></strong></p>
+			
+<pre><code class="javascript">function encrypt(plain, cipher, text) {
+    plain = plain + plain.toUpperCase();
+    cipher = cipher + cipher.toUpperCase();
+ 
+    var newText = &#x27;&#x27;;
+    for(var i=0; i&#x3C;text.length; i++) {
+        var c = text.charAt(i);
+        var index = plain.indexOf(c);
+        if(index &#x3E;= 0 &#x26;&#x26; index &#x3C; cipher.length) {
+            newText += cipher.charAt(index);
+        } else {
+            newText += c;
+        }
+    }
+    return newText;
+}</code></pre>
+			
+			<p><a href="http://ideone.com/sgJxuQ" target="_blank">See live demo</a></p>
+			<br/>
+						
+			<p><strong><big>Python</big></strong></p>
+
+<pre><code class="python">def encrypt(plain, cipher, text):
+    plain += plain.upper()
+    cipher += cipher.upper()
+ 
+    newText = &#x27;&#x27;
+    for c in text:
+        index = plain.find(c)
+        if(index &#x3E;= 0 and index &#x3C; len(cipher)):
+            newText += cipher[index]
+        else:
+            newText += c
+        
+    return newText;</code></pre>
+			
+			<p><a href="http://ideone.com/1APK9U" target="_blank">See live demo</a></p>
+			<br/>
+			
+			<p><strong><big>Java</big></strong></p>
+			
+<pre><code class="java">public static String encrypt(String plain, String cipher, String text) {
+    plain = plain + plain.toUpperCase();
+    cipher = cipher + cipher.toUpperCase();
+ 
+    String newText = &#x22;&#x22;;
+    for(int i=0; i&#x3C;text.length(); i++) {
+        char c = text.charAt(i);
+        int index = plain.indexOf(c);
+        if(index &#x3E;= 0 &#x26;&#x26; index &#x3C; cipher.length()) {
+            newText += cipher.charAt(index);
+        } else {
+            newText += c;
+        }
+    }
+    return newText;
+}</code></pre>
+			
+			<p><a href="http://ideone.com/S11kXI" target="_blank">See live demo</a></p>
+			<br/>
+			
+			<p><strong><big>C#</big></strong></p>
+
+<pre><code class="csharp">public static String encrypt(String plain, String cipher, String text) {
+    plain = plain + plain.ToUpper();
+    cipher = cipher + cipher.ToUpper();
+ 
+    String newText = &#x22;&#x22;;
+    for(int i=0; i&#x3C;text.Length; i++) {
+        char c = text[i];
+        int index = plain.IndexOf(c);
+        if(index &#x3E;= 0 &#x26;&#x26; index &#x3C; cipher.Length) {
+            newText += cipher[index];
+        } else {
+            newText += c;
+        }
+    }
+    return newText;
+}</code></pre>
+			
+			<p><a href="http://ideone.com/raYryq" target="_blank">See live demo</a></p>
+			
+		</div>
+		
+		<a href="https://github.com/jfmdev/TuringFonts" target="_blank"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/52760788cde945287fbb584134c4cbc2bc36f904/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f77686974655f6666666666662e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png"></a>
+    </body>
+</html>
+

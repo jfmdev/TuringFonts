@@ -1,7 +1,7 @@
 Turing fonts
 ============
 
-_Write uncrawable and uncopiable texts_
+_Publish uncrawable and uncopiable texts_
 
 **TuringFonts** is a simple technique for generate content (for websites or PDF files) that can't we crawled by bots or copied using the clipboard.
 
