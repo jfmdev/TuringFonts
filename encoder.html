@@ -114,8 +114,8 @@
         <nav class="navbar navbar-default">
             <div class="container-fluid">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="#"><img alt="" title="TuringFonts" src="img/logo-24.png"></a>
-                    <a class="navbar-brand" href="#">TuringFonts</a>
+                    <a class="navbar-brand" href="index.html"><img alt="" title="TuringFonts" src="img/logo-24.png"></a>
+                    <a class="navbar-brand" href="index.html">TuringFonts</a>
                 </div>
 
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -142,8 +142,8 @@
 				</p>
 				<small>
 					<div class="row" style="margin-bottom: 3px;">
-						<div class="col-md-2 text-right">Plaintext alphabet:</div>
-						<div class="col-md-10 text-left">
+						<div class="col-xs-2 text-right">Plaintext alphabet:</div>
+						<div class="col-xs-10 text-left">
 							<span class="alpha" ng-if="method !== 'Custom'">{{plainAlpha}}</span>
 							<input ng-if="method === 'Custom'" type="text" ng-model="plainAlpha" ng-change="update()" size="40" />
 						</div>
@@ -151,8 +151,8 @@
 				</small>
 				<small>
 					<div class="row" style="margin-bottom: 3px;">
-						<div class="col-md-2 text-right">Ciphertext alphabet:</div>
-						<div class="col-md-10 text-left">
+						<div class="col-xs-2 text-right">Ciphertext alphabet:</div>
+						<div class="col-xs-10 text-left">
 							<span class="alpha" ng-if="method !== 'Custom'">{{cipherAlpha}}</span>
 							<input ng-if="method === 'Custom'" type="text" ng-model="cipherAlpha" ng-change="update()" size="40" />
 						</div>

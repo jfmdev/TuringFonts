@@ -13,16 +13,20 @@
         
         <script type="text/javascript" src="lib/angular/angular-1.3.15.min.js"></script>
         
+		<script type="text/javascript" src="lib/slidorion/jquery.easing.js"></script>
+		<script type="text/javascript" src="lib/slidorion/jquery.slidorion.min.js"></script>
+		<link rel="stylesheet" href="lib/slidorion/slidorion.css" />
+	
         <link href='http://fonts.googleapis.com/css?family=Source+Code+Pro' rel='stylesheet' type='text/css'>
         <style type="text/css">
 			@font-face {
 				font-family: 'arial_atbash';
-				src: url('fonts/arial/arial_atbash-webfont.eot');
-				src: url('fonts/arial/arial_atbash-webfont.eot?#iefix') format('embedded-opentype'),
-					 url('fonts/arial/arial_atbash-webfont.woff2') format('woff2'),
-					 url('fonts/arial/arial_atbash-webfont.woff') format('woff'),
-					 url('fonts/arial/arial_atbash-webfont.ttf') format('truetype'),
-					 url('fonts/arial/arial_atbash-webfont.svg#arialregular') format('svg');
+				src: url('fonts/arial/arial_atbash.eot');
+				src: url('fonts/arial/arial_atbash.eot?#iefix') format('embedded-opentype'),
+					 url('fonts/arial/arial_atbash.woff2') format('woff2'),
+					 url('fonts/arial/arial_atbash.woff') format('woff'),
+					 url('fonts/arial/arial_atbash.ttf') format('truetype'),
+					 url('fonts/arial/arial_atbash.svg#arialregular') format('svg');
 				font-weight: normal;
 				font-style: normal;
 			}
@@ -74,6 +78,13 @@
 			table.table tbody tr td:first-child {
 				font-weight: bold;
 			}
+			.slidorion {
+				box-shadow: none;
+				padding: 0;
+				color: black;
+				width:840px;
+				height:480px;
+			}
         </style>
 		<script type="text/javascript">
 			function encrypt(text) {
@@ -101,14 +112,21 @@
 				$scope.update = function() { $scope.encrypText = encrypt($scope.someText); };
 				$scope.update();
 			});
+			
+			$(document).ready(function(){
+				$('div.slidorion').slidorion({
+					speed: 1000,
+					interval: 8000
+				});
+			});
 		</script>
     </head>
     <body>
         <nav class="navbar navbar-default">
             <div class="container-fluid">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="#"><img alt="" title="TuringFonts" src="img/logo-24.png"></a>
-                    <a class="navbar-brand" href="#">TuringFonts</a>
+                    <a class="navbar-brand" href="index.html"><img alt="" title="TuringFonts" src="img/logo-24.png"></a>
+                    <a class="navbar-brand" href="index.html">TuringFonts</a>
                 </div>
 
                 <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -157,7 +175,7 @@
 
 			<br/>
 			
-			<p>Have some doubt? <a href="http://jsfiddle.net/jfmdev/d31805rq/" target="_blank">Check the demo at JSFiddle</a>.</p>
+			<p>Have some doubt? Check the <a href="http://jsfiddle.net/jfmdev/d31805rq/" target="_blank">live demo</a> or download the <a href="sample.pdf">sample PDF file</a>.</p>
 			
             <h2>How to use it</h2>
             
@@ -170,6 +188,56 @@
 
 			<p>If you want to use your own substitution alphabets and/or generate your own Turing fonts, I recommend you to <a href="advanced.html">read the advanced topics</a>.</p>
 			           
+			<h3>In documents</h3>
+			
+			<div class="slidorion">
+				<div class="slider">
+					<div class="slide"><img src="img/diapos/docs1.jpg" /></div>
+					<div class="slide"><img src="img/diapos/docs2.jpg" /></div>
+					<div class="slide"><img src="img/diapos/docs3.jpg" /></div>
+					<div class="slide"><img src="img/diapos/docs4.jpg" /></div>
+					<div class="slide"><img src="img/diapos/docs5.jpg" /></div>
+				</div>
+
+				<div class="accordion">
+					<div class="header">Download font</div>
+					<div class="content">Select a font, a substitution method and download the corresponding TTF file.</div>
+					<div class="header">Install font</div>
+					<div class="content">Install the downloaded font into your computer.</div>
+					<div class="header">Encode text</div>
+					<div class="content">Encode your text using the substitution method previously chosen.</div>
+					<div class="header">Apply font</div>
+					<div class="content">Copy the encoded text into a word processor and apply the font installed.</div>
+					<div class="header">Verify</div>
+					<div class="content">Verify that the text can be read and export the document as PDF (indicating that the fonts used must be embedded).</div>
+				</div>
+			</div>
+			
+			<h3>In websites</h3>
+			
+			<div class="slidorion">
+				<div class="slider">
+					<div class="slide"><img src="img/diapos/pages1.jpg" /></div>
+					<div class="slide"><img src="img/diapos/pages2.jpg" /></div>
+					<div class="slide"><img src="img/diapos/pages3.jpg" /></div>
+					<div class="slide"><img src="img/diapos/pages4.jpg" /></div>
+					<div class="slide"><img src="img/diapos/pages5.jpg" /></div>
+				</div>
+
+				<div class="accordion">
+					<div class="header">Download font</div>
+					<div class="content">Select a font, a substitution method and download the corresponding Zip file. Unzip the file in one of your website's folder.</div>
+					<div class="header">Declare font</div>
+					<div class="content">Declare the selected font in the CSS code of the page in which you are going to use it.</div>
+					<div class="header">Encode text</div>
+					<div class="content">Encode your text using the substitution method previously chosen.</div>
+					<div class="header">Apply font</div>
+					<div class="content">Copy the encoded text into the page and apply the font.</div>
+					<div class="header">Verify</div>
+					<div class="content">Verify that the text can be read.</div>
+				</div>
+			</div>
+
 			<h2><a name="downloads">Downloads</a></h2>
 			
 			<p>In this section you will find a list of <em>Turing fonts</em> ready to be used.</p>
@@ -190,75 +258,75 @@
 						<td>Arial</td>
 						<td>
 								<a href="fonts/Arial_ROT13.ttf"><span class="glyphicon glyphicon-font" aria-hidden="true"></span></a>
-								<a href="fonts/Arial_ROT13.zip"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span></a>
+								<a href="fonts/arial_rot13.zip"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span></a>
 						</td>
 						<td>
 							<a href="fonts/Arial_Atbash.ttf"><span class="glyphicon glyphicon-font" aria-hidden="true"></span></a>
-							<a href="fonts/Arial_Atbash.zip"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span></a>
+							<a href="fonts/arial_atbash.zip"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span></a>
 						</td>
 						<td>
 								<a href="fonts/Arial_Zebra.ttf"><span class="glyphicon glyphicon-font" aria-hidden="true"></span></a>
-								<a href="fonts/Arial_Zebra.zip"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span></a>
+								<a href="fonts/arial_zebra.zip"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span></a>
 						</td>
 					</tr>
 					<tr>
 						<td>Courier New</td>
 						<td>
-								<a href="fonts/Courier_New_ROT13.ttf"><span class="glyphicon glyphicon-font" aria-hidden="true"></span></a>
-								<a href="fonts/Courier_New_ROT13.zip"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span></a>
+								<a href="fonts/CourierNew_ROT13.ttf"><span class="glyphicon glyphicon-font" aria-hidden="true"></span></a>
+								<a href="fonts/couriernew_rot13.zip"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span></a>
 						</td>
 						<td>
-								<a href="fonts/Courier_New_Atbash.ttf"><span class="glyphicon glyphicon-font" aria-hidden="true"></span></a>
-								<a href="fonts/Courier_New_Atbash.zip"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span></a>
+								<a href="fonts/CourierNew_Atbash.ttf"><span class="glyphicon glyphicon-font" aria-hidden="true"></span></a>
+								<a href="fonts/couriernew_atbash.zip"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span></a>
 						</td>
 						<td>
-								<a href="fonts/Courier_New_Zebra.ttf"><span class="glyphicon glyphicon-font" aria-hidden="true"></span></a>
-								<a href="fonts/Courier_New_Zebra.zip"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span></a>
+								<a href="fonts/CourierNew_Zebra.ttf"><span class="glyphicon glyphicon-font" aria-hidden="true"></span></a>
+								<a href="fonts/couriernew_zebra.zip"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span></a>
 						</td>
 					</tr>
 					<tr>
 						<td>Georgia</td>
 						<td>
 								<a href="fonts/Georgia_ROT13.ttf"><span class="glyphicon glyphicon-font" aria-hidden="true"></span></a>
-								<a href="fonts/Georgia_ROT13.zip"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span></a>
+								<a href="fonts/georgia_rot13.zip"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span></a>
 						</td>
 						<td>
 								<a href="fonts/Georgia_Atbash.ttf"><span class="glyphicon glyphicon-font" aria-hidden="true"></span></a>
-								<a href="fonts/Georgia_Atbash.zip"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span></a>
+								<a href="fonts/georgia_atbash.zip"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span></a>
 						</td>
 						<td>
 								<a href="fonts/Georgia_Zebra.ttf"><span class="glyphicon glyphicon-font" aria-hidden="true"></span></a>
-								<a href="fonts/Georgia_Zebra.zip"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span></a>
+								<a href="fonts/georgia_zebra.zip"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span></a>
 						</td>
 					</tr>
 					<tr>
 						<td>Tahoma</td>
 						<td>
 								<a href="fonts/Tahoma_ROT13.ttf"><span class="glyphicon glyphicon-font" aria-hidden="true"></span></a>
-								<a href="fonts/Tahoma_ROT13.zip"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span></a>
+								<a href="fonts/tahoma_rot13.zip"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span></a>
 						</td>
 						<td>
 								<a href="fonts/Tahoma_Atbash.ttf"><span class="glyphicon glyphicon-font" aria-hidden="true"></span></a>
-								<a href="fonts/Tahoma_Atbash.zip"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span></a>
+								<a href="fonts/tahoma_atbash.zip"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span></a>
 						</td>
 						<td>
 								<a href="fonts/Tahoma_Zebra.ttf"><span class="glyphicon glyphicon-font" aria-hidden="true"></span></a>
-								<a href="fonts/Tahoma_Zebra.zip"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span></a>
+								<a href="fonts/tahoma_zebra.zip"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span></a>
 						</td>
 					</tr>
 					<tr>
 						<td>Verdana</td>
 						<td>
 								<a href="fonts/Verdana_ROT13.ttf"><span class="glyphicon glyphicon-font" aria-hidden="true"></span></a>
-								<a href="fonts/Verdana_ROT13.zip"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span></a>
+								<a href="fonts/verdana_rot13.zip"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span></a>
 						</td>
 						<td>
 								<a href="fonts/Verdana_Atbash.ttf"><span class="glyphicon glyphicon-font" aria-hidden="true"></span></a>
-								<a href="fonts/Verdana_Atbash.zip"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span></a>
+								<a href="fonts/verdana_atbash.zip"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span></a>
 						</td>
 						<td>
 								<a href="fonts/Verdana_Zebra.ttf"><span class="glyphicon glyphicon-font" aria-hidden="true"></span></a>
-								<a href="fonts/Verdana_Zebra.zip"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span></a>
+								<a href="fonts/verdana_zebra.zip"><span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span></a>
 						</td>
 					</tr>
 				</tbody>

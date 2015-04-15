@@ -1,0 +1,109 @@
+/* Slidorion Stylesheet */
+.slidorion {
+	position: relative;
+	width: 870px;			/* Set to slidorion width. Is equal to .slider + .accordion width */
+	height: 400px;			/* Set to slidorion height. Is equal to .slider and .accordion height */
+	left: 50%;
+	background: #CBCBCB;
+	padding: 10px;
+	border: 1px solid #BBB;
+	box-shadow: 0 0 34px #bbb;
+	margin-left: -436px;
+}
+
+.slider {
+	width: 68%;
+	height: 100%;
+	position: relative;
+	float: left;
+	overflow: hidden;		/* Hides the animations */
+}
+
+.slider .slide {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}
+
+.accordion {
+	width: 32%;
+	height: 100%;
+	font-family: Verdana;
+	background: #eee;
+	box-shadow: -3px 0px 3px -1px rgba(51,51,51,0.3);
+	position: relative;
+	z-index:999;
+	overflow: hidden;
+	float: left;
+}
+
+.accordion .header {
+	padding: 8px 14px;
+	font-size: 12px;
+	font-weight: bold;
+	color: #333;
+	background: #ededed;
+	background: -moz-linear-gradient(top, #ededed 59%, #dcdcdc 100%);
+	background: -webkit-linear-gradient(top, #ededed 59%,#dcdcdc 100%);
+	background: -o-linear-gradient(top, #ededed 59%,#dcdcdc 100%);
+	background: -ms-linear-gradient(top, #ededed 59%,#dcdcdc 100%);
+	background: linear-gradient(top, #ededed 59%,#dcdcdc 100%);
+	border-top: 1px solid #ccc;
+}
+
+.accordion .header:first-child {
+	border-top: none;
+}
+
+.accordion .header:hover {
+	background: #EDEDED;
+	cursor: pointer;
+}
+
+.accordion .header.active {
+	border-bottom: none;
+	background: #676767 !important;
+	color: #FFF;
+}
+
+.accordion .content {
+	height: 258px;			/* This height needs to be changed as it depends on the accordion height and number of tabs */
+	font-weight: normal;
+	font-size: 12px;
+	line-height: 20px;
+	margin: 0;
+	padding: 16px;
+	border: none;
+	background: #d6d6d6;
+	background: -moz-linear-gradient(top, #d6d6d6 0%, #ffffff 10%);
+	background: -webkit-linear-gradient(top, #d6d6d6 0%,#ffffff 10%);
+	background: -o-linear-gradient(top, #d6d6d6 0%,#ffffff 10%);
+	background: -ms-linear-gradient(top, #d6d6d6 0%,#ffffff 10%);
+	background: linear-gradient(top, #d6d6d6 0%,#ffffff 10%);
+	overflow:auto;
+}
+
+.accordion .content p {
+	margin-bottom: 10px;
+}
+
+.slidorion .slidorion-nav {
+    position: absolute;
+    top: 200px;
+    width: 16px;
+    height: 27px;
+    z-index: 9999;
+    background: url('../img/arrows.png') 0 0 no-repeat;
+    cursor: pointer;
+}
+
+.slidorion .slidorion-nav-left {
+	left: 30px;
+}
+
+.slidorion .slidorion-nav-right {
+	right: 310px;
+	background-position: -16px 0;
+}

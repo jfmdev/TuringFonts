@@ -1,0 +1,156 @@
+<!DOCTYPE html> 
+<html lang="en">
+    <head>
+        <title>TuringFonts - How to create a custom font</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link rel="icon" type="image/png" href="img/logo.ico"/>
+        
+        <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="lib/bootstrap/css/bootstrap-darkly.min.css" />
+        <script type="text/javascript" src="lib/jquery/jquery-1.11.2.min.js"></script>
+        <script type="text/javascript" src="lib/bootstrap/js/bootstrap.min.js"></script>
+        
+        <script type="text/javascript" src="lib/angular/angular-1.3.15.min.js"></script>
+
+		<link rel="stylesheet" href="lib/highlights/styles/tomorrow-night.css" />
+        <script type="text/javascript" src="lib/highlights/highlight.pack.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script>
+        
+		<script type="text/javascript" src="lib/slidorion/jquery.easing.js"></script>
+		<script type="text/javascript" src="lib/slidorion/jquery.slidorion.min.js"></script>
+		<link rel="stylesheet" href="lib/slidorion/slidorion.css" />
+	
+        <link href='http://fonts.googleapis.com/css?family=Source+Code+Pro' rel='stylesheet' type='text/css'>
+        <style type="text/css">
+            h1, h2, h3, h2 a, h2 a:hover {
+                font-family: 'Source Code Pro';
+				color: #88f;
+            }
+            h1 {
+                margin-top: 0;
+            }
+            div.content {
+                padding: 5px;
+            }
+			p, li {
+				font-size: 16px;
+				font-family: Verdana;
+			}
+			h2 a, h2 a:hover {
+				text-decoration: none;
+			}
+			input, textarea, select {
+				color: white;
+				background-color: #333;
+				border: 1px solid darkgray;
+			}
+			span.alpha {
+				color: #ffa;
+			}
+			div.output {
+				border: 1px solid darkgray;
+				padding: 3px;
+				color: #aff;
+			}
+			pre {
+				padding: 0;
+			}
+        </style>
+		<script type="text/javascript">
+			$(document).ready(function(){
+				$('div.slidorion').slidorion({
+					speed: 1000,
+					interval: 8000
+				});
+			});
+		</script>
+    </head>
+    <body>
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="index.html"><img alt="" title="TuringFonts" src="img/logo-24.png"></a>
+                    <a class="navbar-brand" href="index.html">TuringFonts</a>
+                </div>
+
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav navbar-left">
+                        <li><a href="index.html">Getting started</a></li>
+                        <li><a href="advanced.html">Advanced topics</a></li>
+                        <li><a href="encoder.html">Encoder</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div class="content col-md-8 col-md-offset-2">
+            <h1>How to create a Turing font</h1>
+
+			<p>If you want to use your own substitution method and/or another font (different that the ones provided in the <a href="index.html#downloads">Downloads</a> section)
+			you will need to create your own Turing's font.</p>
+			
+			<p>The first thing that you need to do is to define your <em>plain text alphabet</em> and your <em>cipher text alphabet</em>, which define which letters are going to be substituted and with which values.</p>
+			
+			<p>For example, in ROT13 the plain text alphabet is "abcdefghijklmnopqrstuvwxyz" and the cipher text alphabet is "nopqrstuvwxyzabcdefghijklm", indicating that the letter 'A' is going to be substituted by 'N', the letter 'B' by 'O', etc.</p>
+			
+			<p>The next thing to do is to define a font that inverses the substitutions. For example, if ROT13 is used, the font must indicate to draw an 'A' when the letter 'N' is found, draw a 'B' when encountering an 'O', etc.</p>
+			
+			<p>One way to do this is to use scripting capabilities of the application <a href="http://fontforge.github.io/">FontForge</a>.</p>
+			
+			
+			<h2>Using FontForge</h2>
+			
+			<p>In order to use FontForge to create a Turing font, first must you replace, in the following script, the path of the font to modify, the alphabets that you want to use and (optionally) the name of the new font.</p>
+			
+<pre><code class="python"># Load module
+import fontforge
+
+# Get the font to be modified
+myFont = fontforge.open(&#x22;C:\MyFonts\Arial.ttf&#x22;)
+
+# Define the text and plain alphabets to use
+plain = &#x22;abcdefghijklmnopqrstuvwxyz&#x22;
+cipher = &#x22;zyxwvutsrqponmlkjihgfedcba&#x22;
+
+# Define the name of the new font.
+newFontName = myFont.fontname + &#x22;-&#x22; + cipher
+
+# Create a font to use as auxiliar variable
+temporal = fontforge.font()
+&#x9;
+# Change the order of the letters
+plain = plain + plain.upper()
+cipher = cipher + cipher.upper()
+for i in range(len(plain)):
+    myFont.selection.select( plain[i] )
+    myFont.copy()                                   
+    temporal.selection.select( cipher[i] )
+    temporal.paste()
+
+# Copy back the letters in the auxiliar font to the original font.
+temporal.selection.select((&#x22;ranges&#x22;,None),&#x22;a&#x22;,&#x22;z&#x22;)
+myFont.selection.select((&#x22;ranges&#x22;,None),&#x22;a&#x22;,&#x22;z&#x22;)
+temporal.copy()
+myFont.paste()
+temporal.selection.select((&#x22;ranges&#x22;,None),&#x22;A&#x22;,&#x22;Z&#x22;)
+myFont.selection.select((&#x22;ranges&#x22;,None),&#x22;A&#x22;,&#x22;Z&#x22;)
+temporal.copy()
+myFont.paste()
+
+# Save new font
+myFont.fontname = newFontName
+myFont.familyname = newFontName
+myFont.fullname = newFontName
+myFont.save(newFontName + &#x22;.sfd&#x22;)
+temporal.close()</code></pre>
+
+		<p>Then you execute this script in FontForge, by selecting the option <strong>File</strong> and then <strong>Execute script...</strong></p>
+
+		<p>After a few seconds, the font is going to be generated and you are going to be able to exported to TTF or any other format supported by the application.</p>
+		
+		</div>
+		
+		<a href="https://github.com/jfmdev/TuringFonts" target="_blank"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/52760788cde945287fbb584134c4cbc2bc36f904/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f77686974655f6666666666662e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png"></a>
+    </body>
+</html>
+
