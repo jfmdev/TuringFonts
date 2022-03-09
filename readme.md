@@ -1,3 +1,5 @@
+> **Notice:** this project has been archived for being considered feature complete.
+
 Turing fonts
 ============
 
